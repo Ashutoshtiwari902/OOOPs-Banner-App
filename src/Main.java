@@ -16,6 +16,7 @@ public class Main {
             banner[i] = String.join("  ", o[i], o[i], p[i], s[i]);
         }
 
+
         for (String line : banner) {
             System.out.println(line);
         }

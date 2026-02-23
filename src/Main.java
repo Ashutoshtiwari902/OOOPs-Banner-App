@@ -4,9 +4,6 @@ public class Main {
         printBanner();
     }
 
-    /**
-     * Prints OOPS banner using String array and loop
-     */
     public static void printBanner() {
 
         // Store all banner lines inside an array
@@ -18,7 +15,6 @@ public class Main {
                 String.join("  ", "OOOO", "OOOO", "P", "SSSS")
         };
 
-        // Enhanced for-loop to print banner
         for (String line : banner) {
             System.out.println(line);
         }

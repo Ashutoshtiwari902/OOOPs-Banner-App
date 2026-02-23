@@ -1,56 +1,79 @@
-public class Main {
-    public static void main(String[] args) {
+import java.util.HashMap;
+import java.util.Map;
 
-        printBanner();
+public class Main {
+
+    public static void main(String[] args) {
+        printBanner("OOPS");
     }
 
-    public static void printBanner() {
+    public static void printBanner(String word) {
 
-        String[] o = buildO();
-        String[] p = buildP();
-        String[] s = buildS();
+        CharacterPatternMap patternMap = new CharacterPatternMap();
 
-        String[] banner = new String[o.length];
+        int height = 5; // number of rows in each character
 
-        for (int i = 0; i < o.length; i++) {
-            banner[i] = String.join("  ", o[i], o[i], p[i], s[i]);
+        String[] banner = new String[height];
+
+        for (int row = 0; row < height; row++) {
+
+            StringBuilder lineBuilder = new StringBuilder();
+
+            for (char ch : word.toCharArray()) {
+
+                String[] pattern = patternMap.getPattern(ch);
+
+                if (pattern != null) {
+                    lineBuilder.append(pattern[row]).append("  ");
+                }
+            }
+
+            banner[row] = lineBuilder.toString();
         }
-
 
         for (String line : banner) {
             System.out.println(line);
         }
     }
 
-    public static String[] buildO() {
-        return new String[]{
-                "OOOO",
-                "O  O",
-                "O  O",
-                "O  O",
-                "OOOO"
-        };
-    }
+    /**
+     * Static Inner Class to manage character-pattern mappings
+     */
+    static class CharacterPatternMap {
 
-    public static String[] buildP() {
-        return new String[]{
-                "PPPP",
-                "P   P",
-                "PPPP",
-                "P",
-                "P"
-        };
-    }
+        private final Map<Character, String[]> patternMap;
 
-    public static String[] buildS() {
-        return new String[]{
-                "SSSS",
-                "S",
-                "SSSS",
-                "    S",
-                "SSSS"
-        };
+        public CharacterPatternMap() {
+
+            patternMap = new HashMap<>();
+
+            patternMap.put('O', new String[]{
+                    "OOOO",
+                    "O  O",
+                    "O  O",
+                    "O  O",
+                    "OOOO"
+            });
+
+            patternMap.put('P', new String[]{
+                    "PPPP",
+                    "P   P",
+                    "PPPP",
+                    "P",
+                    "P"
+            });
+
+            patternMap.put('S', new String[]{
+                    "SSSS",
+                    "S",
+                    "SSSS",
+                    "    S",
+                    "SSSS"
+            });
+        }
+
+        public String[] getPattern(char character) {
+            return patternMap.get(Character.toUpperCase(character));
+        }
     }
 }
-
-

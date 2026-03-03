@@ -3,77 +3,65 @@ import java.util.Map;
 
 public class Main {
 
+    // Map to store character patterns
+    private static Map<Character, String[]> patternMap = new HashMap<>();
+
     public static void main(String[] args) {
-        printBanner("OOPS");
+
+        // Step 1: Load patterns
+        loadPatterns();
+
+        // Step 2: Render Banner
+        renderBanner("OOPS");
     }
 
-    public static void printBanner(String word) {
+    // Load character patterns into HashMap
+    private static void loadPatterns() {
 
-        CharacterPatternMap patternMap = new CharacterPatternMap();
+        patternMap.put('O', new String[]{
+                " *** ",
+                "*   *",
+                "*   *",
+                "*   *",
+                " *** "
+        });
 
-        int height = 5; // number of rows in each character
+        patternMap.put('P', new String[]{
+                "**** ",
+                "*   *",
+                "**** ",
+                "*    ",
+                "*    "
+        });
 
-        String[] banner = new String[height];
+        patternMap.put('S', new String[]{
+                " ****",
+                "*    ",
+                " *** ",
+                "    *",
+                "**** "
+        });
+    }
 
-        for (int row = 0; row < height; row++) {
+    // Render banner using Map lookup
+    private static void renderBanner(String word) {
 
-            StringBuilder lineBuilder = new StringBuilder();
+        word = word.toUpperCase();
 
-            for (char ch : word.toCharArray()) {
+        for (int row = 0; row < 5; row++) {
 
-                String[] pattern = patternMap.getPattern(ch);
+            for (int i = 0; i < word.length(); i++) {
 
-                if (pattern != null) {
-                    lineBuilder.append(pattern[row]).append("  ");
+                char ch = word.charAt(i);
+
+                if (patternMap.containsKey(ch)) {
+                    System.out.print(patternMap.get(ch)[row] + "  ");
+                } else {
+                    System.out.print("     "); // empty space if char not found
                 }
             }
 
-            banner[row] = lineBuilder.toString();
-        }
-
-        for (String line : banner) {
-            System.out.println(line);
-        }
-    }
-
-    /**
-     * Static Inner Class to manage character-pattern mappings
-     */
-    static class CharacterPatternMap {
-
-        private final Map<Character, String[]> patternMap;
-
-        public CharacterPatternMap() {
-
-            patternMap = new HashMap<>();
-
-            patternMap.put('O', new String[]{
-                    "OOOO",
-                    "O  O",
-                    "O  O",
-                    "O  O",
-                    "OOOO"
-            });
-
-            patternMap.put('P', new String[]{
-                    "PPPP",
-                    "P   P",
-                    "PPPP",
-                    "P",
-                    "P"
-            });
-
-            patternMap.put('S', new String[]{
-                    "SSSS",
-                    "S",
-                    "SSSS",
-                    "    S",
-                    "SSSS"
-            });
-        }
-
-        public String[] getPattern(char character) {
-            return patternMap.get(Character.toUpperCase(character));
+            System.out.println();
         }
     }
 }
